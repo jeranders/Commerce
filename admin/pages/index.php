@@ -1,12 +1,13 @@
 <?php 
 include 'bdd.php'; 
+include 'sessions.php'; 
 include 'Header.php';
 include 'function.php';
 ?>
 
 <div class="page-content">
 
-
+<?php echo flash(); ?>
 	<!-- BEGIN PAGE HEADER-->
 	<h3 class="page-title">
 		Accueil <small>Accueil</small>

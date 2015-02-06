@@ -195,7 +195,7 @@ $requete->closeCursor();
 						<li class="divider">
 						</li>
 						<li>
-							<a href="extra_lock.html">
+							<a href="Configuration.php">
 							<i class="icon-wrench"></i> Configuration </a>
 						</li>
 						<li>

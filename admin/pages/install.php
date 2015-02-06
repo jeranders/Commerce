@@ -79,56 +79,146 @@ if(isset($_POST['send'])){
 		if ($impot == 1 && $activite == 1) {
 			$taux_impot = 1;
 			$cotisation = 13.3;
-			$total_cotisation = $taux_impot + $cotisation;
-			echo $total_cotisation;
+
+			$req = $bdd->prepare('UPDATE configurations 
+				SET c_impot = :taux_impot,
+				c_cotisation = :cotisation
+				WHERE id = 0
+				');
+			$req->execute(array(			
+				'taux_impot' => $taux_impot,
+				'cotisation' => $cotisation
+				));
+			
 		}elseif ($impot == 2 && $activite == 1) {
 			$cotisation = 13.3;
-			$total_cotisation = $cotisation;
-			echo $total_cotisation;
+			$taux_impot = 0;$req = $bdd->prepare('UPDATE configurations 
+				SET c_impot = :taux_impot,
+				c_cotisation = :cotisation
+				WHERE id = 0
+				');
+			$req->execute(array(			
+				'taux_impot' => $taux_impot,
+				'cotisation' => $cotisation
+				));
+			
+		}elseif ($impot == 2 && $activite == 2) {
+			$cotisation = 22.9;
+			$taux_impot = 0;$req = $bdd->prepare('UPDATE configurations 
+				SET c_impot = :taux_impot,
+				c_cotisation = :cotisation
+				WHERE id = 0
+				');
+			$req->execute(array(			
+				'taux_impot' => $taux_impot,
+				'cotisation' => $cotisation
+				));
+			
+		}elseif ($impot == 2 && $activite == 3) {
+			$cotisation = 22.9;
+			$taux_impot = 0;$req = $bdd->prepare('UPDATE configurations 
+				SET c_impot = :taux_impot,
+				c_cotisation = :cotisation
+				WHERE id = 0
+				');
+			$req->execute(array(			
+				'taux_impot' => $taux_impot,
+				'cotisation' => $cotisation
+				));
+			
+		}elseif ($impot == 2 && $activite == 4) {
+			$cotisation = 22.9;
+			$taux_impot = 0;$req = $bdd->prepare('UPDATE configurations 
+				SET c_impot = :taux_impot,
+				c_cotisation = :cotisation
+				WHERE id = 0
+				');
+			$req->execute(array(			
+				'taux_impot' => $taux_impot,
+				'cotisation' => $cotisation
+				));
+			
+		}elseif ($impot == 1 && $activite == 2) {
+			$taux_impot = 1.7;
+			$cotisation = 22.9;
+			$req = $bdd->prepare('UPDATE configurations 
+				SET c_impot = :taux_impot,
+				c_cotisation = :cotisation
+				WHERE id = 0
+				');
+			$req->execute(array(			
+				'taux_impot' => $taux_impot,
+				'cotisation' => $cotisation
+				));
+			
+		}elseif ($impot == 1 && $activite == 3) {
+			$taux_impot = 2.2;
+			$cotisation = 22.9;
+			$req = $bdd->prepare('UPDATE configurations 
+				SET c_impot = :taux_impot,
+				c_cotisation = :cotisation
+				WHERE id = 0
+				');
+			$req->execute(array(			
+				'taux_impot' => $taux_impot,
+				'cotisation' => $cotisation
+				));
+			
+		}elseif ($impot == 1 && $activite == 4) {
+			$taux_impot = 2.2;
+			$cotisation = 22.9;
+			$req = $bdd->prepare('UPDATE configurations 
+				SET c_impot = :taux_impot,
+				c_cotisation = :cotisation
+				WHERE id = 0
+				');
+			$req->execute(array(			
+				'taux_impot' => $taux_impot,
+				'cotisation' => $cotisation
+				));
+			
 		}
 
-
 		$password = sha1($mot_de_passe);
-		$validation = 1;
+		$validation = (int)1;
+		
+		$req = $bdd->prepare('UPDATE configurations 
+			SET 
+			c_email_societe = :mail_professionnel,
+			c_email_perso = :mail_personnel,
+			c_nom_societe = :nom_societe,
+			c_adresse = :adresse_societe,
+			c_nom = :nom,
+			c_prenom = :prenom,
+			c_pseudo = :utilisateur,
+			c_password = :password,
+			c_siret = :siret,
+			c_phrase_secret = :phrase_secret,
+			c_phrase_verif = :phrase_verif,
+			c_type_activite = :activite,
+			c_valide = :validation
+			WHERE id = 0
+			');
+		$req->execute(array(            
+			'mail_professionnel' => $mail_professionnel,
+			'mail_personnel' => $mail_personnel,
+			'nom_societe' => $nom_societe,
+			'adresse_societe' => $adresse_societe,
+			'nom' => $nom,
+			'prenom' => $prenom,
+			'utilisateur' => $utilisateur,
+			'password' => $password,
+			'siret' => $siret,
+			'phrase_secret' => $phrase_secret,
+			'phrase_verif' => $phrase_verif,
+			'activite' => $activite,
+			'validation' => $validation
+			));
+		
 
-		// /*---Mise à jour du budget par rapport à la commande---*/
-		// $req = $bdd->prepare('UPDATE configurations 
-		// 	SET c_email_societe = :mail_professionnel,
-		// 	c_email_perso = :mail_personnel,
-		// 	c_nom_societe = :nom_societe,
-		// 	c_adresse = :adresse_societe,
-		// 	c_nom = :nom,
-		// 	c_prenom = :prenom,
-		// 	c_pseudo = :utilisateur,
-		// 	c_password = :password,
-		// 	c_siret = :siret,
-		// 	c_phrase_secret = :phrase_secret,
-		// 	c_phrase_verif = :c_phrase_verif,
-		// 	c_type_activite = :activite,
-		// 	c_impot = :impot,
-		// 	c_valide = :validation
-		// 	WHERE id = 0
-		// 	');
-		// $req->execute(array(            
-		// 	'mail_professionnel' => $mail_professionnel,
-		// 	'mail_personnel' => $mail_personnel,
-		// 	'nom_societe' => $nom_societe,
-		// 	'adresse_societe' => $adresse_societe,
-		// 	'nom' => $nom,
-		// 	'prenom' => $prenom,
-		// 	'utilisateur' => $utilisateur,
-		// 	'password' => $password,
-		// 	'siret' => $siret,
-		// 	'phrase_secret' => $phrase_secret,
-		// 	'phrase_verif' => $phrase_verif,
-		// 	'activite' => $activite,
-		// 	'impot' => $impot,
-		// 	'validation' => $validation
-		// 	));
-
-		// setFlash('Félicitation vous pouvez commencer à utiliser le portail. Pensez à compléter les informations.', 'success');
-		// header('Location:index.php');
-		// die();
+		setFlash('Félicitation vous pouvez commencer à utiliser le portail. Pensez à compléter les informations.', 'success');
+		header('Location:index.php');
+		die();
 
 	}
 
