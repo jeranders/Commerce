@@ -7,7 +7,7 @@ include 'function.php';
 
 <div class="page-content">
 
-<?php echo flash(); ?>
+	<?php echo flash(); ?>
 	<!-- BEGIN PAGE HEADER-->
 	<h3 class="page-title">
 		Accueil <small>Accueil</small>
