@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.1.4
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 06 Février 2015 à 21:44
--- Version du serveur :  5.6.17
--- Version de PHP :  5.5.12
+-- Généré le :  Sam 07 Février 2015 à 10:34
+-- Version du serveur :  5.6.15-log
+-- Version de PHP :  5.5.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `configurations` (
 --
 
 INSERT INTO `configurations` (`id`, `c_nom_societe`, `c_siret`, `c_date_activite`, `c_type_activite`, `c_ca_t`, `c_organisme`, `c_cotisation`, `c_impot`, `c_accre`, `c_adresse`, `c_logo`, `c_avatar`, `c_pseudo`, `c_email_societe`, `c_email_perso`, `c_nom`, `c_prenom`, `c_phrase_secret`, `c_phrase_verif`, `c_password`, `c_valide`) VALUES
-(0, '', '', '0000-00-00', '', 0.00, '', 0.00, 0.00, 0, '', '', '', '', '', '', '', '', '', '', '', 0);
+(0, 'Little Owl', '0', '0000-00-00', '1', 0.00, '', 13.30, 1.00, 0, 'Little Owl', '', '', 'Moltes', 'contact@little-owl.fr', 'Brechoire.j@gmail.com', 'Brechoire', 'Jérôme', 'Nom de votre premier animal', 'Moustache', '723156650c5778d0e4df4b2fbfeefa65359302e5', 1);
 
 -- --------------------------------------------------------
 
