@@ -37,6 +37,7 @@ $requete->closeCursor();
 <link href="../../assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL PLUGIN STYLES -->
 <!-- BEGIN PAGE STYLES -->
+<link href="../../assets/admin/pages/css/profile-old.css" rel="stylesheet" type="text/css"/>
 <link href="../../assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE STYLES -->
 <!-- BEGIN THEME STYLES -->
