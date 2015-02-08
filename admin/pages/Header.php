@@ -246,7 +246,7 @@ $requete->closeCursor();
 				
 
 				<li class="tooltips" data-container="body" data-placement="right" data-html="true" data-original-title="Accueil du site">
-					<a href="angularjs" target="_blank">
+					<a href="index.php">
 					<i class="icon-home"></i>
 					<span class="title">
 					Accueil </span>
