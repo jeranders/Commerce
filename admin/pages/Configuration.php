@@ -3,6 +3,21 @@ include 'bdd.php';
 include 'sessions.php'; 
 include 'Header.php';
 include 'function.php';
+$configuration = $bdd->query('SELECT * FROM configurations');
+$donnees = $configuration->fetch();
+if ($donnees['c_type_activite'] == 1) {
+	$active = 'Vente de marchandises';
+	$fiscal = 'BIC';
+}elseif ($donnees['c_type_activite'] == 2) {
+	$active = 'Prestation de services';
+	$fiscal = 'BIC';
+}elseif ($donnees['c_type_activite'] == 3) {
+	$active = 'Professions libérales relevant du RSI';
+	$fiscal = 'BNC';
+}elseif ($donnees['c_type_activite'] == 4) {
+	$active = 'Professions libérales relevant de la CIPAV';
+	$fiscal = 'BNC';
+}
 ?>
 
 <div class="page-content">
@@ -16,7 +31,7 @@ Configuration <small>Configuration de votre e-commerce</small>
 <ul class="page-breadcrumb">
 <li>
 <i class="fa fa-home"></i>
-<a href="index.php">Home</a>
+<a href="index.php">Accueil</a>
 <i class="fa fa-angle-right"></i>
 </li>
 <li>
@@ -78,13 +93,13 @@ Settings </a>
 <div class="col-md-9">
 <div class="row">
 <div class="col-md-8 profile-info">
-<h1>Little Owl</h1>
+<h1> <?php echo $donnees['c_nom_societe']; ?> </h1>
 <p>
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
 </p>
 <p>
 <a href="#">
-www.little-owl.fr </a>
+<?php echo $donnees['c_site']; ?> </a>
 </p>
 <ul class="list-inline">
 <li class="tooltips"  data-container="body" data-placement="bottom" data-html="true" data-original-title="Ville de votre activité">
@@ -94,13 +109,13 @@ www.little-owl.fr </a>
 <i class="fa fa-calendar"></i> 01/03/2015
 </li>
 <li class="tooltips"  data-container="body" data-placement="bottom" data-html="true" data-original-title="Type d'activité">
-<i class="fa fa-briefcase"></i> Vente de marchandises
+<i class="fa fa-briefcase"></i> <?php echo $active; ?>
 </li>
 <li class="tooltips"  data-container="body" data-placement="bottom" data-html="true" data-original-title="Bénéfices industriels et commerciaux">
-<i class="fa fa-star"></i> BIC
+<i class="fa fa-star"></i> <?php echo $fiscal; ?>
 </li>
 <li class="tooltips"  data-container="body" data-placement="bottom" data-html="true" data-original-title="Numéro de SIRET">
-<i class="fa fa-heart"></i> 12345678912345
+<i class="fa fa-heart"></i> <?php echo $donnees['c_siret']; ?>
 </li>
 </ul>
 </div>
@@ -123,20 +138,20 @@ Informations
 Cotisation <i class="fa fa-img-up"></i>
 </span>
 <span class="sale-num">
-13,30% </span>
+<?php echo $donnees['c_cotisation']; ?> % </span>
 </li>
 <li>
 <span class="sale-info">
 Impot revenu  <i class="fa fa-img-down"></i>
 </span>
 <span class="sale-num">
-1% </span>
+<?php echo $donnees['c_impot']; ?> % </span>
 </li>
 <li>
 <span class="sale-info">
 Total </span>
 <span class="sale-num">
-14,30%</span>
+<?php echo $donnees['c_cotisation'] + $donnees['c_impot']; ?> %</span>
 </li>
 <li>
 <span class="sale-info">
@@ -148,7 +163,7 @@ Non </span>
 <span class="sale-info">
 Plafond CA </span>
 <span class="sale-num">
-82 200&euro; </span>
+<?php echo $donnees['c_plafond']; ?>&euro; </span>
 </li>
 <li>
 <span class="sale-info">
