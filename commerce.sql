@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.1.4
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Dim 08 Février 2015 à 20:47
--- Version du serveur :  5.6.17
--- Version de PHP :  5.5.12
+-- Généré le :  Mar 10 Février 2015 à 15:54
+-- Version du serveur :  5.6.15-log
+-- Version de PHP :  5.5.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -37,6 +37,9 @@ CREATE TABLE IF NOT EXISTS `configurations` (
   `c_plafond` int(11) NOT NULL COMMENT 'Plafond du chiffre d''affaire',
   `c_cotisation` float(11,2) NOT NULL COMMENT 'Taux de cotisation',
   `c_impot` float(11,2) NOT NULL,
+  `c_budget_depart` float(11,2) NOT NULL,
+  `c_resultat_banque` float(11,2) NOT NULL,
+  `c_tel` varchar(25) NOT NULL,
   `c_accre` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Si ACCRE valeur à 1 sinon 0 par defaut',
   `c_adresse` varchar(255) NOT NULL COMMENT 'Adresse de la société',
   `c_logo` varchar(255) NOT NULL COMMENT 'Logo de la société',
@@ -58,8 +61,8 @@ CREATE TABLE IF NOT EXISTS `configurations` (
 -- Contenu de la table `configurations`
 --
 
-INSERT INTO `configurations` (`id`, `c_nom_societe`, `c_siret`, `c_date_activite`, `c_type_activite`, `c_ca_t`, `c_organisme`, `c_plafond`, `c_cotisation`, `c_impot`, `c_accre`, `c_adresse`, `c_logo`, `c_avatar`, `c_site`, `c_pseudo`, `c_email_societe`, `c_email_perso`, `c_nom`, `c_prenom`, `c_phrase_secret`, `c_phrase_verif`, `c_password`, `c_valide`) VALUES
-(0, 'Little Owl', '0', '0000-00-00', '1', 0.00, '', 82200, 13.30, 1.00, 0, 'Little Owl', '', '', 'http://little-owl.fr', 'Moltes', 'contact@little-owl.fr', 'Brechoire.j@gmail.com', 'Brechoire', 'Jérôme', 'Nom de votre premier animal', 'Moustache', '723156650c5778d0e4df4b2fbfeefa65359302e5', 1);
+INSERT INTO `configurations` (`id`, `c_nom_societe`, `c_siret`, `c_date_activite`, `c_type_activite`, `c_ca_t`, `c_organisme`, `c_plafond`, `c_cotisation`, `c_impot`, `c_budget_depart`, `c_resultat_banque`, `c_tel`, `c_accre`, `c_adresse`, `c_logo`, `c_avatar`, `c_site`, `c_pseudo`, `c_email_societe`, `c_email_perso`, `c_nom`, `c_prenom`, `c_phrase_secret`, `c_phrase_verif`, `c_password`, `c_valide`) VALUES
+(0, 'Little Owl', '0', '0000-00-00', '1', 0.00, '', 82200, 13.30, 1.00, 0.00, 0.00, '+33 0 00 00 00', 0, 'Little Owl', '', '', 'http://little-owl.fr', 'Moltes', 'contact@little-owl.fr', 'brechoire.j@gmail.com', 'Brechoir', 'Jérôme', 'Nom de votre premier animal', 'Moustache', '723156650c5778d0e4df4b2fbfeefa65359302e5', 1);
 
 -- --------------------------------------------------------
 
@@ -88,6 +91,34 @@ CREATE TABLE IF NOT EXISTS `fournisseurs` (
 INSERT INTO `fournisseurs` (`id_fournisseur`, `f_nom`, `f_ref`, `f_site`, `f_tel`, `f_fax`, `f_commentaire`, `f_pays`, `f_logo`, `f_adresse`) VALUES
 (1, 'Hema', '', 'http://www.hema.fr/', '', '', 'Magasin ou j''achète les vernis à ongles', 'France', '', ''),
 (2, 'Alex', '000000', '#', '0102030405', '0102030405', '', 'Inconnu', '', 'Inconnu');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `historiques`
+--
+
+CREATE TABLE IF NOT EXISTS `historiques` (
+  `id_h` int(11) NOT NULL AUTO_INCREMENT,
+  `h_page` varchar(255) NOT NULL,
+  `h_date` datetime NOT NULL,
+  `h_type` varchar(255) NOT NULL,
+  `h_description` text NOT NULL,
+  `h_ip` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_h`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf32 AUTO_INCREMENT=7 ;
+
+--
+-- Contenu de la table `historiques`
+--
+
+INSERT INTO `historiques` (`id_h`, `h_page`, `h_date`, `h_type`, `h_description`, `h_ip`) VALUES
+(1, 'Configuration', '2015-02-10 11:16:56', '1', 'Modifications des renseignements personnels', '127.0.0.1'),
+(2, 'Configuration', '2015-02-10 11:29:38', '1', 'Modifications des renseignements personnels', '127.0.0.1'),
+(3, 'Configuration', '2015-02-10 11:37:27', '1', 'Modifications des renseignements personnels', '127.0.0.1'),
+(4, 'Configuration', '2015-02-10 12:56:33', '1', 'Modifications des renseignements personnels', '127.0.0.1'),
+(5, 'Configuration', '2015-02-10 13:28:26', '1', 'Modifications des renseignements personnels', '127.0.0.1'),
+(6, 'Configuration', '2015-02-10 13:32:36', '1', 'Modif', '127.0.0.1');
 
 -- --------------------------------------------------------
 

@@ -1,28 +1,91 @@
 <?php 
 include 'bdd.php'; 
 include 'sessions.php'; 
-include 'Header.php';
+
 include 'function.php';
-$configuration = $bdd->query('SELECT * FROM configurations');
-$donnees = $configuration->fetch();
-if ($donnees['c_type_activite'] == 1) {
-	$active = 'Vente de marchandises';
-	$fiscal = 'BIC';
-}elseif ($donnees['c_type_activite'] == 2) {
-	$active = 'Prestation de services';
-	$fiscal = 'BIC';
-}elseif ($donnees['c_type_activite'] == 3) {
-	$active = 'Professions libérales relevant du RSI';
-	$fiscal = 'BNC';
-}elseif ($donnees['c_type_activite'] == 4) {
-	$active = 'Professions libérales relevant de la CIPAV';
-	$fiscal = 'BNC';
+
+/*HISTORIQUES DEBUT*/
+$h_page = 'Configuration';
+/*HISTORIQUES FIN*/
+
+ // MODIFICATION DES RENSEIGNEMENTS PERSONNELS
+if (isset($_POST['modif'])) {
+	$nom = $_POST['nom'];
+	$prenom = $_POST['prenom'];
+	$tel = $_POST['tel'];
+	$email_pro = $_POST['email_pro'];
+	$email_perso = $_POST['email_perso'];
+
+	$update = $bdd->prepare('UPDATE configurations 
+				SET c_nom = :nom,
+				c_prenom = :prenom,
+				c_tel = :tel,
+				c_email_societe = :email_pro,
+				c_email_perso = :email_perso
+				WHERE id = 0
+				');
+			$update->execute(array(			
+				'nom' => $nom,
+				'prenom' => $prenom,
+				'tel' => $tel,
+				'email_pro' => $email_pro,
+				'email_perso' => $email_perso
+				));
+				$update->closeCursor();
+
+			// HISTORIQUE INSERT DEBUT
+		historique(1, $h_page, 'Modifications des renseignements personnels.');
+			// HISTORIQUE INSERT FIN	
+
+	setFlash('Mise à jour des renseignements personneles effectué.');
+	header('Location:Configuration.php');
+	die();
+
 }
+
+// END
+
+// MODIFICATION DU PASSWORD
+
+if (isset($_POST['modif_password'])) {
+	$mdp_actu = sha1($_POST['mdp_actu']);
+	$nouveau_mdp = sha1($_POST['nouveau_mdp']);
+	$re_nouveau_mdp = sha1($_POST['re_nouveau_mdp']);
+
+	if ($mdp_actu OR $nouveau_mdp OR $re_nouveau_mdp != '') {
+
+		$bdd_password = $bdd->query('SELECT c_password FROM configurations WHERE id = 0');
+		$donnees = $bdd_password->fetch();
+
+		if ($mdp_actu == $donnees['c_password']) {
+			if (strlen($_POST['nouveau_mdp']) >= 4 AND strlen($_POST['nouveau_mdp']) < 8) {
+				if ($nouveau_mdp == $re_nouveau_mdp) {
+					setFlash('Password changé !');
+				}else{
+					setFlash('Attention les mots de passe ne sont pas identique', 'danger');
+				}
+			}else{
+				setFlash('Le mot de passe doit avoir entre 4 et 8 caractères.', 'danger');
+			}
+		}else{
+			setFlash('Erreur dans le password actuel merci de vérifier.', 'danger');
+		}
+		$bdd_password->closeCursor();
+
+	}else{
+		setFlash('Attention tous les champs ne sont pas rempli !', 'danger');
+	}
+}
+
+// END
+
+
+include 'Header.php';
 ?>
 
 <div class="page-content">
 
-<?php echo flash(); ?>
+<?php echo flash(); var_dump($_POST);?>
 <!-- BEGIN PAGE HEADER-->
 <h3 class="page-title">
 Configuration <small>Configuration de votre e-commerce</small>
@@ -72,11 +135,11 @@ edit </a>
 </li>
 <li>
 <a href="#">
-Projects </a>
+Vider la table Clients </a>
 </li>
 <li>
 <a href="#">
-Messages <span>
+Vider la table Produits <span>
 3 </span>
 </a>
 </li>
@@ -90,6 +153,22 @@ Settings </a>
 </li>
 </ul>
 </div>
+
+<?php $configuration = $bdd->query('SELECT * FROM configurations');
+$donnees = $configuration->fetch();
+if ($donnees['c_type_activite'] == 1) {
+	$active = 'Vente de marchandises';
+	$fiscal = 'BIC';
+}elseif ($donnees['c_type_activite'] == 2) {
+	$active = 'Prestation de services';
+	$fiscal = 'BIC';
+}elseif ($donnees['c_type_activite'] == 3) {
+	$active = 'Professions libérales relevant du RSI';
+	$fiscal = 'BNC';
+}elseif ($donnees['c_type_activite'] == 4) {
+	$active = 'Professions libérales relevant de la CIPAV';
+	$fiscal = 'BNC';
+} ?>
 <div class="col-md-9">
 <div class="row">
 <div class="col-md-8 profile-info">
@@ -175,6 +254,7 @@ Plafond Actuel </span>
 </div>
 </div>
 </div>
+<?php $configuration->closeCursor(); ?>
 <!--end col-md-4-->
 </div>
 <!--end row-->
@@ -205,25 +285,40 @@ Historique des manipulations </a>
 </th>
 </tr>
 </thead>
+
 <tbody>
+
+<?php 
+
+$info_historique = $bdd->query('SELECT * FROM historiques ORDER BY h_date DESC LIMIT 10'); 
+
+while ($donnees = $info_historique->fetch())
+{
+?>
 <tr>
 <td>
-<a href="#">
-Ajout de commande </a>
-</td>
-<td class="hidden-xs">
-Commande n°x Nom : Cabochon 18 mm
-</td>
-<td>
-<span class="label label-success label-sm">
-Ajout </span>
-</td>
-<td>
-<a class="btn default btn-xs blue-stripe" href="#">
-<?php echo getRelativeTime ('2015-02-07 13:25:00'); ?> </a>
-</td>
-</tr>
+		<a href="#">
+		<?php echo $donnees['h_page']; ?> </a>
+		</td>
+		<td class="hidden-xs">
+		<?php echo $donnees['h_description']; ?> </a>
+		</td>
+		<td>
+		<?php type_historique($donnees['h_type']); ?>
+		</td>
+		<td>
+		<a class="btn default btn-xs blue-stripe" href="#">
+		<?php echo getRelativeTime ($donnees['h_date']); ?> </a>
+		</td>
+		</tr>
+<?php
+}
+$info_historique->closeCursor();
+?>
+
+
 </tbody>
+
 </table>
 </div>
 </div>
@@ -258,36 +353,38 @@ Ajout </span>
 </li>
 </ul>
 </div>
+<?php $renseignements = $bdd->query('SELECT * FROM configurations');
+$donnees = $renseignements->fetch(); ?>
 <div class="col-md-9">
 <div class="tab-content">
 <div id="tab_1-1" class="tab-pane active">
-<form role="form" action="#">
+<form role="form" action="#" method="post">
 <div class="form-group">
 <label class="control-label">Votre nom</label>
-<input type="text" placeholder="Brechoire" class="form-control"/>
+<input type="text" value="<?php echo $donnees['c_nom']; ?>" class="form-control" name="nom"/>
 </div>
 <div class="form-group">
 <label class="control-label">Votre prénom</label>
-<input type="text" placeholder="Jérôme" class="form-control"/>
+<input type="text" value="<?php echo $donnees['c_prenom']; ?>" class="form-control" name="prenom"/>
 </div>
 <div class="form-group">
-<label class="control-label">Numéro de Fix</label>
-<input type="text" placeholder="+33 0 00 00 00" class="form-control"/>
+<label class="control-label">Numéro de contact</label>
+<input type="text" value="+33 0 00 00 00" class="form-control" name="tel"/>
 </div>
 <div class="form-group">
 <label class="control-label">Votre e-mail pro</label>
-<input type="text" placeholder="contact@little-owl.fr" class="form-control"/>
+<input type="text" value="<?php echo $donnees['c_email_societe']; ?>" class="form-control" name="email_pro"/>
 </div>
 <div class="form-group">
 <label class="control-label">Votre e-mail perso</label>
-<input type="text" placeholder="brechoire.j@gmail.com" class="form-control"/>
+<input type="text" value="<?php echo $donnees['c_email_perso']; ?>" class="form-control" name="email_perso"/>
 </div>
 <div class="margiv-top-10">
-<a href="#" class="btn green">
-Enregistrer les modifications </a>
+	<button type="submit" class="btn green-meadow" name="modif">Enregistrer les modifications</button>
 </div>
 </form>
 </div>
+<?php $renseignements->closeCursor(); ?>
 <div id="tab_2-2" class="tab-pane">
 <p>
 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
@@ -324,26 +421,23 @@ Enregistrer les modifications </a>
 </form>
 </div>
 <div id="tab_3-3" class="tab-pane">
-<form action="#">
-<div class="form-group">
-<label class="control-label">Mot de passe actuel</label>
-<input type="password" class="form-control"/>
-</div>
-<div class="form-group">
-<label class="control-label">Nouveau mot de passe</label>
-<input type="password" class="form-control"/>
-</div>
-<div class="form-group">
-<label class="control-label">Re-rentrer le nouveau mot de passe</label>
-<input type="password" class="form-control"/>
-</div>
-<div class="margin-top-10">
-<a href="#" class="btn green">
-Change Password </a>
-<a href="#" class="btn default">
-Cancel </a>
-</div>
-</form>
+	<form action="#" method="post">
+		<div class="form-group">
+			<label class="control-label">Mot de passe actuel</label>
+			<input type="password" class="form-control" name="mdp_actu"/>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Nouveau mot de passe</label>
+			<input type="password" class="form-control" name="nouveau_mdp"/>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Re-rentrer le nouveau mot de passe</label>
+			<input type="password" class="form-control" name="re_nouveau_mdp"/>
+		</div>
+		<div class="margin-top-10">
+			<button type="submit" class="btn green-meadow" name="modif_password">Enregistrer les modifications</button>
+		</div>
+	</form>
 </div>
 <div id="tab_4-4" class="tab-pane">
 <form action="#">

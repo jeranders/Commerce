@@ -2,7 +2,7 @@
 function input($id){
 	$value = isset($_POST[$id]) ? $_POST[$id] : '';
 	return "<input type='text' class='form-control' name='$id' value='$value'>";
-								
+
 }
 
 function password($idpassword){
@@ -21,11 +21,11 @@ function select($id, $option = array()){
 
 function msgErreur($message){
 	return "<div class='alert alert-danger alert-dismissable'>
-		<button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
-		<strong>Erreur !</strong> $message</div>";
+  <button type='button' class='close' data-dismiss='alert' aria-hidden='true'></button>
+  <strong>Erreur !</strong> $message</div>";
 }
 
-
+//------------------ Date relative -----------------------
 
 function getRelativeTime($date) {
     // Déduction de la date donnée à la date actuelle
@@ -68,6 +68,41 @@ function getRelativeTime($date) {
 }
 
 
+//Fonction pour choisir label et texte des types historiques
+
+function type_historique($id) {
+    global $bdd;
+    $type_historique = $bdd->query('SELECT * FROM historiques'); 
+    $donnees = $type_historique->fetch();
+    if ($id == 1) {
+     echo '<span class="label label-success label-sm"> Modification </span>';
+ }elseif ($id == 2) {
+    echo '<span class="label label-primary label-sm"> Ajout </span>';
+}elseif ($id == 3) {
+    echo '<span class="label label-danger label-sm"> Suppression </span>';
+}
+return $id;
+
+$type_historique->closeCurser();
+
+}
+
+// Fonction insertion historique
+function historique($type, $page, $description){
+    global $bdd;
+    $h_page = $page;
+    $h_type = $type;
+    $h_description =  $description;
+    $h_ip = $_SERVER["REMOTE_ADDR"];
+
+    $historique = $bdd->prepare('INSERT INTO historiques(h_page, h_date, h_type, h_description, h_ip) VALUES (:h_page, NOW(), :h_type, :h_description, :h_ip)');
+    $historique->execute(array(         
+        'h_page' => $h_page,                    
+        'h_type' => $h_type,
+        'h_description' => $h_description,
+        'h_ip' => $h_ip
+        ));
 
 
-?>
+}
+
