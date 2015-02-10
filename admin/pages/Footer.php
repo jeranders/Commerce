@@ -74,19 +74,6 @@ jQuery(document).ready(function() {
    Tasks.initDashboardWidget();
 });
 
-
-$(document).ready( function(){
-$('.auto').load('load.php');
-refresh();
-});
- 
-function refresh()
-{
-   setTimeout( function() {
-     $('.auto').load('load.php');
-     refresh();
-   }, 1000);
-}
 </script>
 <!-- END JAVASCRIPTS -->
 </body>
