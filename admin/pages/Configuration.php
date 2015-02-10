@@ -58,14 +58,25 @@ if (isset($_POST['modif_password'])) {
 		$donnees = $bdd_password->fetch();
 
 		if ($mdp_actu == $donnees['c_password']) {
-			if (strlen($_POST['nouveau_mdp']) >= 4 AND strlen($_POST['nouveau_mdp']) < 8) {
+			if (strlen($_POST['nouveau_mdp']) >= 4 AND strlen($_POST['nouveau_mdp']) < 12) {
 				if ($nouveau_mdp == $re_nouveau_mdp) {
-					setFlash('Password changé !');
+
+					$update = $bdd->prepare('UPDATE configurations SET c_password = :nouveau_mdp WHERE id = 0');
+					$update->execute(array(	'nouveau_mdp' => $nouveau_mdp));
+					$update->closeCursor();
+
+					// HISTORIQUE INSERT DEBUT
+					historique(1, $h_page, 'Modifications du mot de passe.');
+			// HISTORIQUE INSERT FIN	
+
+					setFlash('Votre mot de passe à bien été changé.');
+					header('Location:Configuration.php');
+					die();
 				}else{
 					setFlash('Attention les mots de passe ne sont pas identique', 'danger');
 				}
 			}else{
-				setFlash('Le mot de passe doit avoir entre 4 et 8 caractères.', 'danger');
+				setFlash('Le mot de passe doit avoir entre 4 et 12 caractères.', 'danger');
 			}
 		}else{
 			setFlash('Erreur dans le password actuel merci de vérifier.', 'danger');
@@ -286,7 +297,7 @@ Historique des manipulations </a>
 </tr>
 </thead>
 
-<tbody>
+<tbody class="auto">
 
 <?php 
 
@@ -315,6 +326,7 @@ while ($donnees = $info_historique->fetch())
 }
 $info_historique->closeCursor();
 ?>
+
 
 
 </tbody>
