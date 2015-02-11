@@ -456,42 +456,28 @@ Enregistrer les modifications </a>
 <table class="table table-bordered table-striped">
 <tr>
 <td>
-Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..
+Utilisez vous PayPlug ?
 </td>
 <td>
 <label class="uniform-inline">
-<input type="radio" name="optionsRadios1" value="option1"/>
-Yes </label>
+<input type="radio" name="payplug" value="payplug1"/>
+Oui </label>
 <label class="uniform-inline">
-<input type="radio" name="optionsRadios1" value="option2" checked/>
-No </label>
+<input type="radio" name="payplug" value="payplug2"/>
+Non </label>
 </td>
 </tr>
 <tr>
 <td>
-Enim eiusmod high life accusamus terry richardson ad squid wolf moon
+Utilisez vous PayPal ?
 </td>
 <td>
 <label class="uniform-inline">
-<input type="checkbox" value=""/> Yes </label>
-</td>
-</tr>
-<tr>
-<td>
-Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-</td>
-<td>
+<input type="radio" name="paypal" value="paypal1"/>
+Oui </label>
 <label class="uniform-inline">
-<input type="checkbox" value=""/> Yes </label>
-</td>
-</tr>
-<tr>
-<td>
-Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-</td>
-<td>
-<label class="uniform-inline">
-<input type="checkbox" value=""/> Yes </label>
+<input type="radio" name="paypal" value="paypal2"/>
+Non </label>
 </td>
 </tr>
 </table>
