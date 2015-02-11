@@ -253,6 +253,14 @@ $requete->closeCursor();
 					</a>
 				</li>
 
+				<li class="tooltips" data-container="body" data-placement="right" data-html="true" data-original-title="Ajouter des fournisseurs">
+					<a href="Ajout_Fournisseur.php">
+					<i class="icon-notebook"></i>
+					<span class="title">
+					Ajout fournisseur </span>
+					</a>
+				</li>
+
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>

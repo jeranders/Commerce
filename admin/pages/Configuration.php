@@ -125,13 +125,28 @@ if (isset($_POST['modif_config_divers'])) {
 
 // END
 
+// MODIFICATION REGLAGES PAIEMENTS
+if (isset($_POST['modif_paiement'])) {
+	$paypal = $_POST['paypal'];
+	$payplug = $_POST['payplug'];
+
+	$update = $bdd->prepare('UPDATE configurations SET c_check_paypal = :paypal, c_check_payplug = :payplug WHERE id = 0');
+	$update->execute(array(	'paypal' => $paypal, 'payplug' => $payplug));
+	$update->closeCursor();
+	setFlash('Vous avez bien modifié les méthodes de paiement');
+		historique(1, $h_page, 'Méthode de paiement modifié.');
+		header('Location:Configuration.php');
+		die();
+}
+
+// END
 
 include 'Header.php';
 ?>
 
 <div class="page-content">
 
-<?php echo flash(); var_dump($_POST);?>
+<?php echo flash();?>
 <!-- BEGIN PAGE HEADER-->
 <h3 class="page-title">
 Configuration <small>Configuration de votre e-commerce</small>
@@ -162,7 +177,7 @@ Configuration <small>Configuration de votre e-commerce</small>
 					</li>
 					<li>
 						<a href="#tab_1_3" data-toggle="tab">
-							Compte </a>
+							Configuration </a>
 						</li>
 						<li>
 							<a href="#tab_1_6" data-toggle="tab">
@@ -219,9 +234,7 @@ Configuration <small>Configuration de votre e-commerce</small>
 <div class="row">
 <div class="col-md-8 profile-info">
 <h1> <?php echo $donnees['c_nom_societe']; ?> </h1>
-<p>
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
-</p>
+<?php echo htmlspecialchars_decode($donnees['c_description']); ?>
 <p>
 <a href="#">
 <?php echo $donnees['c_site']; ?> </a>
@@ -343,11 +356,11 @@ while ($donnees = $info_historique->fetch())
 ?>
 <tr>
 <td>
-		<a href="#">
-		<?php echo $donnees['h_page']; ?> </a>
+		
+		<?php echo $donnees['h_page']; ?>
 		</td>
 		<td class="hidden-xs">
-		<?php echo $donnees['h_description']; ?> </a>
+		<?php echo $donnees['h_description']; ?>
 		</td>
 		<td>
 		<?php type_historique($donnees['h_type']); ?>
@@ -497,7 +510,9 @@ Enregistrer les modifications </a>
 	</form>
 </div>
 <div id="tab_4-4" class="tab-pane">
-	<form action="#">
+	<form action="#" method="post">
+		<?php $checkbox = $bdd->query('SELECT * FROM configurations');
+							$donnees = $checkbox->fetch(); ?>
 		<table class="table table-bordered table-striped">
 			<tr>
 				<td>
@@ -505,10 +520,10 @@ Enregistrer les modifications </a>
 				</td>
 				<td>
 					<label class="uniform-inline">
-						<input type="radio" name="payplug" value="payplug1"/>
+						<input type="radio" name="payplug" value="1" <?php if (isset($donnees['c_check_payplug']) && $donnees['c_check_payplug']==1) echo 'checked="checked"';?>/>
 						Oui </label>
 						<label class="uniform-inline">
-							<input type="radio" name="payplug" value="payplug2"/>
+							<input type="radio" name="payplug" value="0" <?php if (isset($donnees['c_check_payplug']) && $donnees['c_check_payplug']==0) echo 'checked="checked"';?>/>
 							Non </label>
 						</td>
 					</tr>
@@ -517,21 +532,23 @@ Enregistrer les modifications </a>
 							Utilisez vous PayPal ?
 						</td>
 						<td>
+							
 							<label class="uniform-inline">
-								<input type="radio" name="paypal" value="paypal1"/>
+								<input type="radio" name="paypal" value="1" <?php if (isset($donnees['c_check_paypal']) && $donnees['c_check_paypal']==1) echo 'checked="checked"';?>/>
 								Oui </label>
 								<label class="uniform-inline">
-									<input type="radio" name="paypal" value="paypal2"/>
+									<input type="radio" name="paypal" value="0" <?php if (isset($donnees['c_check_paypal']) && $donnees['c_check_paypal']==0) echo 'checked="checked"';?>/>
 									Non </label>
 								</td>
 							</tr>
 						</table>
 						<!--end profile-settings-->
 						<div class="margin-top-10">
-							<button type="submit" class="btn green-meadow" name="modif_divers">Enregistrer les modifications</button>
+							<button type="submit" class="btn green-meadow" name="modif_paiement">Enregistrer les modifications</button>
 						</div>
 					</form>
 				</div>
+				<?php $checkbox->closeCursor(); ?>
 
 				<div id="tab_5-5" class="tab-pane">
 					<?php $renseignements = $bdd->query('SELECT * FROM configurations');

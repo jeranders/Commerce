@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 11 Février 2015 à 13:55
+-- Généré le :  Mer 11 Février 2015 à 22:36
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `configurations` (
   `id` int(11) NOT NULL,
   `c_nom_societe` varchar(255) NOT NULL COMMENT 'Nom de votre entreprise, société',
+  `c_description` text NOT NULL COMMENT 'Description de votre société',
   `c_siret` varchar(14) NOT NULL COMMENT 'Numéro de SIRET',
   `c_date_activite` date NOT NULL COMMENT 'Date du début de votre activité',
   `c_type_activite` varchar(80) NOT NULL COMMENT 'Type d''activité (Commercial, libéral...)',
@@ -54,6 +55,12 @@ CREATE TABLE IF NOT EXISTS `configurations` (
   `c_phrase_verif` varchar(255) NOT NULL COMMENT 'Vérification du résultat de la phrase secréte',
   `c_password` varchar(60) NOT NULL COMMENT 'Password du portail',
   `c_valide` tinyint(1) NOT NULL COMMENT 'Valide le site',
+  `c_taux_paypal` float(11,2) NOT NULL COMMENT 'Taux en % demandé par PayPal',
+  `c_montant_paypal` float(11,2) NOT NULL COMMENT 'Montant demandé par PayPal',
+  `c_taux_payplug` float(11,2) NOT NULL COMMENT 'Taux en % demandé par PayPlug',
+  `c_montant_payplug` float(11,2) NOT NULL COMMENT 'Montant demandé par PayPlug',
+  `c_check_paypal` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Sur 1 PayPal est utilisé',
+  `c_check_payplug` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Sur 1 PayPlug est utilisé',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
@@ -61,8 +68,8 @@ CREATE TABLE IF NOT EXISTS `configurations` (
 -- Contenu de la table `configurations`
 --
 
-INSERT INTO `configurations` (`id`, `c_nom_societe`, `c_siret`, `c_date_activite`, `c_type_activite`, `c_ca_t`, `c_organisme`, `c_plafond`, `c_cotisation`, `c_impot`, `c_budget_depart`, `c_resultat_banque`, `c_tel`, `c_accre`, `c_adresse`, `c_logo`, `c_avatar`, `c_site`, `c_pseudo`, `c_email_societe`, `c_email_perso`, `c_nom`, `c_prenom`, `c_phrase_secret`, `c_phrase_verif`, `c_password`, `c_valide`) VALUES
-(0, 'Little Owl', '0', '0000-00-00', '1', 0.00, '', 82200, 13.30, 1.00, 700.00, 379.70, '+33 0 00 00 00', 0, '8B Quartier de la Galoperie 59186 Anor', '', '', 'http://little-owl.fr', 'Moltes', 'contact@little-owl.fr', 'brechoire.j@gmail.com', 'Brechoire', 'Jérôme', 'Nom de votre premier animal', 'Moustache', '5b9023ec90cfea0571de6601375bee749e5bfec8', 1);
+INSERT INTO `configurations` (`id`, `c_nom_societe`, `c_description`, `c_siret`, `c_date_activite`, `c_type_activite`, `c_ca_t`, `c_organisme`, `c_plafond`, `c_cotisation`, `c_impot`, `c_budget_depart`, `c_resultat_banque`, `c_tel`, `c_accre`, `c_adresse`, `c_logo`, `c_avatar`, `c_site`, `c_pseudo`, `c_email_societe`, `c_email_perso`, `c_nom`, `c_prenom`, `c_phrase_secret`, `c_phrase_verif`, `c_password`, `c_valide`, `c_taux_paypal`, `c_montant_paypal`, `c_taux_payplug`, `c_montant_payplug`, `c_check_paypal`, `c_check_payplug`) VALUES
+(0, 'Little Owl', '<p>\nCréation de bijoux fantaisie et accessoires.\n</p>', '1', '0000-00-00', '1', 0.00, '', 82200, 13.30, 1.00, 700.00, 379.56, '+33 0 00 00 00', 0, '8B Quartier de la Galoperie 59186 Anor', '', '', 'http://little-owl.fr', 'Moltes', 'contact@little-owl.fr', 'brechoire.j@gmail.com', 'Brechoire', 'Jérôme', 'Nom de votre premier animal', 'Moustache', '5b9023ec90cfea0571de6601375bee749e5bfec8', 1, 3.40, 0.25, 2.50, 0.25, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -106,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `historiques` (
   `h_description` text NOT NULL,
   `h_ip` varchar(255) NOT NULL,
   PRIMARY KEY (`id_h`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf32 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf32 AUTO_INCREMENT=21 ;
 
 --
 -- Contenu de la table `historiques`
@@ -121,7 +128,18 @@ INSERT INTO `historiques` (`id_h`, `h_page`, `h_date`, `h_type`, `h_description`
 (6, 'Configuration', '2015-02-11 09:50:47', '1', 'Modifications du mot de passe.', '127.0.0.1'),
 (7, 'Configuration', '2015-02-11 09:56:27', '1', 'Modifications des renseignements personnels.', '127.0.0.1'),
 (8, 'Configuration', '2015-02-11 13:54:29', '1', 'Modifications des renseignements personnels.', '127.0.0.1'),
-(9, 'Configuration', '2015-02-11 13:54:34', '1', 'Modifications des renseignements personnels.', '127.0.0.1');
+(9, 'Configuration', '2015-02-11 13:54:34', '1', 'Modifications des renseignements personnels.', '127.0.0.1'),
+(10, 'Configuration', '2015-02-11 18:12:57', '1', 'Modifications des réglages divers', '127.0.0.1'),
+(11, 'Configuration', '2015-02-11 18:13:09', '1', 'Modifications des réglages divers', '127.0.0.1'),
+(12, 'Configuration', '2015-02-11 18:14:41', '1', 'Modifications des réglages divers', '127.0.0.1'),
+(13, 'Configuration', '2015-02-11 18:15:38', '1', 'Modifications des réglages divers', '127.0.0.1'),
+(14, 'Configuration', '2015-02-11 18:17:44', '1', 'Modifications des réglages divers', '127.0.0.1'),
+(15, 'Configuration', '2015-02-11 18:17:50', '1', 'Modifications des réglages divers', '127.0.0.1'),
+(16, 'Configuration', '2015-02-11 21:05:20', '1', 'Modifications des réglages divers', '127.0.0.1'),
+(17, 'Configuration', '2015-02-11 21:05:29', '1', 'Modifications des réglages divers', '127.0.0.1'),
+(18, 'Configuration', '2015-02-11 21:05:52', '1', 'Modifications des réglages divers', '127.0.0.1'),
+(19, 'Configuration', '2015-02-11 21:36:57', '1', 'Méthode de paiement modifié.', '127.0.0.1'),
+(20, 'Configuration', '2015-02-11 22:11:50', '1', 'Méthode de paiement modifié.', '127.0.0.1');
 
 -- --------------------------------------------------------
 

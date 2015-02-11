@@ -10,14 +10,18 @@ include 'function.php';
 	<?php echo flash(); ?>
 	<!-- BEGIN PAGE HEADER-->
 	<h3 class="page-title">
-		Accueil <small>Accueil</small>
+		Ajout fournisseur <small>Ajouter vos fournisseurs</small>
 	</h3>
 	<div class="page-bar">
 		<ul class="page-breadcrumb">
 			<li>
 				<i class="fa fa-home"></i>
-				<a href="index.html">Accueil</a>					
-			</li>					
+				<a href="index.php">Accueil</a>
+				<i class="fa fa-angle-right"></i>
+			</li>
+			<li>
+				<a href="#">Ajout fournisseur</a>
+			</li>
 		</ul>
 		
 	</div>
