@@ -93,6 +93,38 @@ if (isset($_POST['modif_password'])) {
 
 // END
 
+// MODIFICATION REGLAGES DIVERS
+
+if (isset($_POST['modif_config_divers'])) {
+	$cotisation = $_POST['cotisation'];
+	$impot = $_POST['impot'];
+	$plafond = $_POST['plafond'];
+	$budget_depart = $_POST['budget_depart'];
+	$resultat_banque = $_POST['resultat_banque'];
+	$siret = $_POST['siret'];
+
+	if ($cotisation AND $impot AND $plafond AND $siret != '') {
+		$update = $bdd->prepare('UPDATE configurations SET c_cotisation = :cotisation, c_impot = :impot, c_plafond = :plafond, c_budget_depart = :budget_depart, c_resultat_banque = :resultat_banque, c_siret = :siret WHERE id = 0');
+		$update->execute(array(
+			'cotisation' => $cotisation,
+			'impot' => $impot,
+			'plafond' => $plafond,
+			'budget_depart' => $budget_depart,
+			'resultat_banque' => $resultat_banque,
+			'siret' => $siret
+			));
+		$update->closeCursor();
+		setFlash('Les modifications de réglages divers on bien été effectué.');
+		historique(1, $h_page, 'Modifications des réglages divers');
+		header('Location:Configuration.php');
+		die();
+	}else {		
+		setFlash('Attention il y a des champs vide.', 'danger');
+	}
+}
+
+// END
+
 
 include 'Header.php';
 ?>
@@ -120,69 +152,69 @@ Configuration <small>Configuration de votre e-commerce</small>
 <!-- END PAGE HEADER-->
 <!-- BEGIN PAGE CONTENT-->
 <div class="row profile">
-<div class="col-md-12">
-<!--BEGIN TABS-->
-<div class="tabbable tabbable-custom tabbable-full-width">
-<ul class="nav nav-tabs">
-<li class="active">
-<a href="#tab_1_1" data-toggle="tab">
-Vue d'ensemble </a>
-</li>
-<li>
-<a href="#tab_1_3" data-toggle="tab">
-Compte </a>
-</li>
-<li>
-<a href="#tab_1_6" data-toggle="tab">
-Help </a>
-</li>
-</ul>
-<div class="tab-content">
-<div class="tab-pane active" id="tab_1_1">
-<div class="row">
-<div class="col-md-3">
-<ul class="list-unstyled profile-nav">
-<li>
-<img src="../img/avatar.png" class="img-responsive" alt=""/>
-<a href="#" class="profile-edit">
-edit </a>
-</li>
-<li>
-<a href="#">
-Vider la table Clients </a>
-</li>
-<li>
-<a href="#">
-Vider la table Produits <span>
-3 </span>
-</a>
-</li>
-<li>
-<a href="#">
-Friends </a>
-</li>
-<li>
-<a href="#">
-Settings </a>
-</li>
-</ul>
-</div>
+	<div class="col-md-12">
+		<!--BEGIN TABS-->
+		<div class="tabbable tabbable-custom tabbable-full-width">
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#tab_1_1" data-toggle="tab">
+						Vue d'ensemble </a>
+					</li>
+					<li>
+						<a href="#tab_1_3" data-toggle="tab">
+							Compte </a>
+						</li>
+						<li>
+							<a href="#tab_1_6" data-toggle="tab">
+								Help </a>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="tab_1_1">
+								<div class="row">
+									<div class="col-md-3">
+										<ul class="list-unstyled profile-nav">
+											<li>
+												<img src="../img/avatar.png" class="img-responsive" alt=""/>
+												<a href="#" class="profile-edit">
+													edit </a>
+												</li>
+												<li>
+													<a href="#">
+														Vider la table Clients </a>
+													</li>
+													<li>
+														<a href="#">
+															Vider la table Produits <span>
+															3 </span>
+														</a>
+													</li>
+													<li>
+														<a href="#">
+															Friends </a>
+														</li>
+														<li>
+															<a href="#">
+																Settings </a>
+															</li>
+														</ul>
+													</div>
 
-<?php $configuration = $bdd->query('SELECT * FROM configurations');
-$donnees = $configuration->fetch();
-if ($donnees['c_type_activite'] == 1) {
-	$active = 'Vente de marchandises';
-	$fiscal = 'BIC';
-}elseif ($donnees['c_type_activite'] == 2) {
-	$active = 'Prestation de services';
-	$fiscal = 'BIC';
-}elseif ($donnees['c_type_activite'] == 3) {
-	$active = 'Professions libérales relevant du RSI';
-	$fiscal = 'BNC';
-}elseif ($donnees['c_type_activite'] == 4) {
-	$active = 'Professions libérales relevant de la CIPAV';
-	$fiscal = 'BNC';
-} ?>
+													<?php $configuration = $bdd->query('SELECT * FROM configurations');
+													$donnees = $configuration->fetch();
+													if ($donnees['c_type_activite'] == 1) {
+														$active = 'Vente de marchandises';
+														$fiscal = 'BIC';
+													}elseif ($donnees['c_type_activite'] == 2) {
+														$active = 'Prestation de services';
+														$fiscal = 'BIC';
+													}elseif ($donnees['c_type_activite'] == 3) {
+														$active = 'Professions libérales relevant du RSI';
+														$fiscal = 'BNC';
+													}elseif ($donnees['c_type_activite'] == 4) {
+														$active = 'Professions libérales relevant de la CIPAV';
+														$fiscal = 'BNC';
+													} ?>
 <div class="col-md-9">
 <div class="row">
 <div class="col-md-8 profile-info">
@@ -560,7 +592,7 @@ Enregistrer les modifications </a>
 				<label>Numéro de SIRET</label>
 				<div class="input-group">
 					<span class="input-group-addon">
-						&euro;
+						<i class="fa fa-key"></i>
 					</span>
 					<input type="text" class="form-control" value="<?php echo $donnees['c_siret']; ?>" name="siret" >
 				</div>
@@ -568,7 +600,7 @@ Enregistrer les modifications </a>
 				
 			
 			<div class="margiv-top-10">
-				<button type="submit" class="btn green-meadow" name="modif">Enregistrer les modifications</button>
+				<button type="submit" class="btn green-meadow" name="modif_config_divers">Enregistrer les modifications</button>
 			</div>
 		</form>
 		<?php $renseignements->closeCursor(); ?>
