@@ -361,42 +361,48 @@ $info_historique->closeCursor();
 </li>
 <li>
 <a data-toggle="tab" href="#tab_4-4">
+<i class="fa fa-eye"></i> Réglages mode paiements </a>
+</li>
+<li>
+<a data-toggle="tab" href="#tab_5-5">
 <i class="fa fa-eye"></i> Réglages divers </a>
 </li>
 </ul>
 </div>
-<?php $renseignements = $bdd->query('SELECT * FROM configurations');
-$donnees = $renseignements->fetch(); ?>
+
 <div class="col-md-9">
 <div class="tab-content">
-<div id="tab_1-1" class="tab-pane active">
-<form role="form" action="#" method="post">
-<div class="form-group">
-<label class="control-label">Votre nom</label>
-<input type="text" value="<?php echo $donnees['c_nom']; ?>" class="form-control" name="nom"/>
-</div>
-<div class="form-group">
-<label class="control-label">Votre prénom</label>
-<input type="text" value="<?php echo $donnees['c_prenom']; ?>" class="form-control" name="prenom"/>
-</div>
-<div class="form-group">
-<label class="control-label">Numéro de contact</label>
-<input type="text" value="+33 0 00 00 00" class="form-control" name="tel"/>
-</div>
-<div class="form-group">
-<label class="control-label">Votre e-mail pro</label>
-<input type="text" value="<?php echo $donnees['c_email_societe']; ?>" class="form-control" name="email_pro"/>
-</div>
-<div class="form-group">
-<label class="control-label">Votre e-mail perso</label>
-<input type="text" value="<?php echo $donnees['c_email_perso']; ?>" class="form-control" name="email_perso"/>
-</div>
-<div class="margiv-top-10">
-	<button type="submit" class="btn green-meadow" name="modif">Enregistrer les modifications</button>
-</div>
-</form>
-</div>
-<?php $renseignements->closeCursor(); ?>
+	<div id="tab_1-1" class="tab-pane active">
+		<?php $renseignements = $bdd->query('SELECT * FROM configurations');
+		$donnees = $renseignements->fetch(); ?>
+		<form role="form" action="#" method="post">
+			<div class="form-group">
+				<label class="control-label">Votre nom</label>
+				<input type="text" value="<?php echo $donnees['c_nom']; ?>" class="form-control" name="nom"/>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Votre prénom</label>
+				<input type="text" value="<?php echo $donnees['c_prenom']; ?>" class="form-control" name="prenom"/>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Numéro de contact</label>
+				<input type="text" value="+33 0 00 00 00" class="form-control" name="tel"/>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Votre e-mail pro</label>
+				<input type="text" value="<?php echo $donnees['c_email_societe']; ?>" class="form-control" name="email_pro"/>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Votre e-mail perso</label>
+				<input type="text" value="<?php echo $donnees['c_email_perso']; ?>" class="form-control" name="email_perso"/>
+			</div>
+			<div class="margiv-top-10">
+				<button type="submit" class="btn green-meadow" name="modif">Enregistrer les modifications</button>
+			</div>
+		</form>
+		<?php $renseignements->closeCursor(); ?>
+	</div>
+
 <div id="tab_2-2" class="tab-pane">
 <p>
 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
@@ -452,44 +458,104 @@ Enregistrer les modifications </a>
 	</form>
 </div>
 <div id="tab_4-4" class="tab-pane">
-<form action="#">
-<table class="table table-bordered table-striped">
-<tr>
-<td>
-Utilisez vous PayPlug ?
-</td>
-<td>
-<label class="uniform-inline">
-<input type="radio" name="payplug" value="payplug1"/>
-Oui </label>
-<label class="uniform-inline">
-<input type="radio" name="payplug" value="payplug2"/>
-Non </label>
-</td>
-</tr>
-<tr>
-<td>
-Utilisez vous PayPal ?
-</td>
-<td>
-<label class="uniform-inline">
-<input type="radio" name="paypal" value="paypal1"/>
-Oui </label>
-<label class="uniform-inline">
-<input type="radio" name="paypal" value="paypal2"/>
-Non </label>
-</td>
-</tr>
-</table>
-<!--end profile-settings-->
-<div class="margin-top-10">
-<a href="#" class="btn green">
-Save Changes </a>
-<a href="#" class="btn default">
-Cancel </a>
-</div>
-</form>
-</div>
+	<form action="#">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<td>
+					Utilisez vous PayPlug ?
+				</td>
+				<td>
+					<label class="uniform-inline">
+						<input type="radio" name="payplug" value="payplug1"/>
+						Oui </label>
+						<label class="uniform-inline">
+							<input type="radio" name="payplug" value="payplug2"/>
+							Non </label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Utilisez vous PayPal ?
+						</td>
+						<td>
+							<label class="uniform-inline">
+								<input type="radio" name="paypal" value="paypal1"/>
+								Oui </label>
+								<label class="uniform-inline">
+									<input type="radio" name="paypal" value="paypal2"/>
+									Non </label>
+								</td>
+							</tr>
+						</table>
+						<!--end profile-settings-->
+						<div class="margin-top-10">
+							<button type="submit" class="btn green-meadow" name="modif_divers">Enregistrer les modifications</button>
+						</div>
+					</form>
+				</div>
+
+				<div id="tab_5-5" class="tab-pane active">
+		<?php $renseignements = $bdd->query('SELECT * FROM configurations');
+		$donnees = $renseignements->fetch(); ?>
+		<form role="form" action="#" method="post">
+			
+			<div class="form-group">
+				<label>Cotisation</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						%
+					</span>
+					<input type="text" class="form-control" value="<?php echo $donnees['c_cotisation']; ?>" name="cotisation" >
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label>Impot sur le revenu</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						%
+					</span>
+					<input type="text" class="form-control" value="<?php echo $donnees['c_impot']; ?>" name="impot" >
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label>Plafonp du chiffre d'affaire</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						&euro;
+					</span>
+					<input type="text" class="form-control" value="<?php echo $donnees['c_plafond']; ?>" name="plafond" >
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label>Budget de départ</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						&euro;
+					</span>
+					<input type="text" class="form-control" value="<?php echo $donnees['c_budget_depart']; ?>" name="budget_depart" >
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label>Crédit sur votre compte pro</label>
+				<div class="input-group">
+					<span class="input-group-addon">
+						&euro;
+					</span>
+					<input type="text" class="form-control" value="<?php echo $donnees['c_resultat_banque']; ?>" name="resultat_banque" >
+				</div>
+			</div>
+				
+			
+			<div class="margiv-top-10">
+				<button type="submit" class="btn green-meadow" name="modif">Enregistrer les modifications</button>
+			</div>
+		</form>
+		<?php $renseignements->closeCursor(); ?>
+	</div>
 </div>
 </div>
 <!--end col-md-9-->
