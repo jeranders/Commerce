@@ -15,11 +15,13 @@ if (isset($_POST['modif'])) {
 	$tel = $_POST['tel'];
 	$email_pro = $_POST['email_pro'];
 	$email_perso = $_POST['email_perso'];
+	$adresse = $_POST['adresse'];
 
 	$update = $bdd->prepare('UPDATE configurations 
 				SET c_nom = :nom,
 				c_prenom = :prenom,
 				c_tel = :tel,
+				c_adresse = :adresse,
 				c_email_societe = :email_pro,
 				c_email_perso = :email_perso
 				WHERE id = 0
@@ -28,6 +30,7 @@ if (isset($_POST['modif'])) {
 				'nom' => $nom,
 				'prenom' => $prenom,
 				'tel' => $tel,
+				'adresse' => $adresse,
 				'email_pro' => $email_pro,
 				'email_perso' => $email_perso
 				));
@@ -393,6 +396,10 @@ $info_historique->closeCursor();
 				<input type="text" value="<?php echo $donnees['c_email_societe']; ?>" class="form-control" name="email_pro"/>
 			</div>
 			<div class="form-group">
+				<label class="control-label">Votre adresse</label>
+				<input type="text" value="<?php echo $donnees['c_adresse']; ?>" class="form-control" name="adresse"/>
+			</div>
+			<div class="form-group">
 				<label class="control-label">Votre e-mail perso</label>
 				<input type="text" value="<?php echo $donnees['c_email_perso']; ?>" class="form-control" name="email_perso"/>
 			</div>
@@ -494,58 +501,68 @@ Enregistrer les modifications </a>
 					</form>
 				</div>
 
-				<div id="tab_5-5" class="tab-pane active">
-		<?php $renseignements = $bdd->query('SELECT * FROM configurations');
-		$donnees = $renseignements->fetch(); ?>
-		<form role="form" action="#" method="post">
-			
-			<div class="form-group">
-				<label>Cotisation</label>
-				<div class="input-group">
-					<span class="input-group-addon">
-						%
-					</span>
-					<input type="text" class="form-control" value="<?php echo $donnees['c_cotisation']; ?>" name="cotisation" >
-				</div>
-			</div>
+				<div id="tab_5-5" class="tab-pane">
+					<?php $renseignements = $bdd->query('SELECT * FROM configurations');
+					$donnees = $renseignements->fetch(); ?>
+					<form role="form" action="#" method="post">
+
+						<div class="form-group">
+							<label>Cotisation</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									%
+								</span>
+								<input type="text" class="form-control" value="<?php echo $donnees['c_cotisation']; ?>" name="cotisation" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label>Impot sur le revenu</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									%
+								</span>
+								<input type="text" class="form-control" value="<?php echo $donnees['c_impot']; ?>" name="impot" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label>Plafond du chiffre d'affaire</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									&euro;
+								</span>
+								<input type="text" class="form-control" value="<?php echo $donnees['c_plafond']; ?>" name="plafond" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label>Budget de départ</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									&euro;
+								</span>
+								<input type="text" class="form-control" value="<?php echo $donnees['c_budget_depart']; ?>" name="budget_depart" >
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label>Crédit sur votre compte pro</label>
+							<div class="input-group">
+								<span class="input-group-addon">
+									&euro;
+								</span>
+								<input type="text" class="form-control" value="<?php echo $donnees['c_resultat_banque']; ?>" name="resultat_banque" >
+							</div>
+						</div>
 
 			<div class="form-group">
-				<label>Impot sur le revenu</label>
-				<div class="input-group">
-					<span class="input-group-addon">
-						%
-					</span>
-					<input type="text" class="form-control" value="<?php echo $donnees['c_impot']; ?>" name="impot" >
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label>Plafonp du chiffre d'affaire</label>
+				<label>Numéro de SIRET</label>
 				<div class="input-group">
 					<span class="input-group-addon">
 						&euro;
 					</span>
-					<input type="text" class="form-control" value="<?php echo $donnees['c_plafond']; ?>" name="plafond" >
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label>Budget de départ</label>
-				<div class="input-group">
-					<span class="input-group-addon">
-						&euro;
-					</span>
-					<input type="text" class="form-control" value="<?php echo $donnees['c_budget_depart']; ?>" name="budget_depart" >
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label>Crédit sur votre compte pro</label>
-				<div class="input-group">
-					<span class="input-group-addon">
-						&euro;
-					</span>
-					<input type="text" class="form-control" value="<?php echo $donnees['c_resultat_banque']; ?>" name="resultat_banque" >
+					<input type="text" class="form-control" value="<?php echo $donnees['c_siret']; ?>" name="siret" >
 				</div>
 			</div>
 				
