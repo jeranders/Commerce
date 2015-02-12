@@ -49,6 +49,8 @@
 <script src="../../assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 <script src="../../assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
 <script src="../../assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/select2/select2.min.js" type="text/javascript"></script>
+<script src="../../assets/admin/pages/scripts/form-validation.js"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="../../assets/global/scripts/metronic.js" type="text/javascript"></script>
@@ -64,6 +66,7 @@ jQuery(document).ready(function() {
    Layout.init(); // init layout
    QuickSidebar.init(); // init quick sidebar
    Demo.init(); // init demo features 
+   FormValidation.init();
    Index.init();   
    Index.initDashboardDaterange();
    Index.initJQVMAP(); // init index page's custom scripts

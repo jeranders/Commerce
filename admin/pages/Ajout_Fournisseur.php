@@ -28,12 +28,57 @@ include 'function.php';
 	<!-- END PAGE HEADER-->
 	<!-- BEGIN PAGE CONTENT-->
 	<div class="row">
-		<div class="col-md-12">
-			Page content goes here
+		
 
+
+
+		<div class="col-md-6 col-md-offset-3">
+			<!-- BEGIN SAMPLE FORM PORTLET-->
+			<div class="portlet box blue">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="fa fa-gift"></i> Ajout de fournisseur.
+					</div>
+					<div class="tools">
+						<a href="" class="collapse" data-original-title="" title="">
+						</a>
+
+						<a href="" class="remove" data-original-title="" title="">
+						</a>
+					</div>
+				</div>
+				<div class="portlet-body form">
+					<form role="form">
+						<div class="form-body">
+
+							<div class="form-group">
+										<label> Liste des fournisseur </label>										
+											<select class="form-control select2me" name="options2">
+												<option value="">Choisir</option>
+												<option value="Option 1">Option 1</option>
+												<option value="Option 2">Option 2</option>
+												<option value="Option 3">Option 3</option>
+												<option value="Option 4">Option 4</option>
+											</select>
+										
+									</div>
+
+					</div>
+					<div class="form-actions">
+						<button type="submit" class="btn blue">Submit</button>
+						<button type="button" class="btn default">Cancel</button>
+					</div>
+				</form>
+			</div>
 		</div>
+		<!-- END SAMPLE FORM PORTLET-->
+
 	</div>
-	<!-- END PAGE CONTENT-->
+
+
+
+</div>
+<!-- END PAGE CONTENT-->
 </div>
 
 <?php include 'Footer.php'; ?>
