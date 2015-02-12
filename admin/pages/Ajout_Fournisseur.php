@@ -28,9 +28,38 @@ include 'function.php';
 	<!-- END PAGE HEADER-->
 	<!-- BEGIN PAGE CONTENT-->
 	<div class="row">
-		
 
-
+		<!-- modal-content -->
+		<div class="modal fade" id="List_Fournisseur" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title">Liste des fournisseurs déja enregistré.</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<select class="form-control select2me" name="options2">
+								<option value="">Voir...</option>
+								<?php 
+								$list_fournisseur = $bdd->query('SELECT * FROM fournisseurs');
+								while ($donnees = $list_fournisseur->fetch()) {
+									?>
+									<option><?php echo $donnees['f_nom']; ?></option>
+									<?php 
+								}
+								?>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">						
+						<button type="button" class="btn default" data-dismiss="modal">Fermer</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
 
 		<div class="col-md-6 col-md-offset-3">
 			<!-- BEGIN SAMPLE FORM PORTLET-->
@@ -42,7 +71,8 @@ include 'function.php';
 					<div class="tools">
 						<a href="" class="collapse" data-original-title="" title="">
 						</a>
-
+						<a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="Liste des fournisseurs">
+						</a>
 						<a href="" class="remove" data-original-title="" title="">
 						</a>
 					</div>
@@ -51,34 +81,26 @@ include 'function.php';
 					<form role="form">
 						<div class="form-body">
 
-							<div class="form-group">
-										<label> Liste des fournisseur </label>										
-											<select class="form-control select2me" name="options2">
-												<option value="">Choisir</option>
-												<option value="Option 1">Option 1</option>
-												<option value="Option 2">Option 2</option>
-												<option value="Option 3">Option 3</option>
-												<option value="Option 4">Option 4</option>
-											</select>
-										
-									</div>
+							<a href="#List_Fournisseur" data-toggle="modal" class="config" data-original-title="" title="Liste des fournisseurs">
+							Voir la liste des fournisseurs</a>
 
-					</div>
-					<div class="form-actions">
-						<button type="submit" class="btn blue">Submit</button>
-						<button type="button" class="btn default">Cancel</button>
-					</div>
-				</form>
+
+						</div>
+						<div class="form-actions">
+							<button type="submit" class="btn blue">Submit</button>
+							<button type="button" class="btn default">Cancel</button>
+						</div>
+					</form>
+				</div>
 			</div>
+			<!-- END SAMPLE FORM PORTLET-->
+
 		</div>
-		<!-- END SAMPLE FORM PORTLET-->
+
+
 
 	</div>
-
-
-
-</div>
-<!-- END PAGE CONTENT-->
+	<!-- END PAGE CONTENT-->
 </div>
 
 <?php include 'Footer.php'; ?>
